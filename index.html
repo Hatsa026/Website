@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Hatsa! – Spelregels & Scoreformulier</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    /* Optional: retro font (werkt alleen als je internet hebt). Mag weg.
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&family=Press+Start+2P&display=swap');
+    */
+
+    :root{
+      --bg1:#0b0624;
+      --bg2:#0c2a4a;
+      --neon1:#ff3fd1;   /* pink */
+      --neon2:#23d5ff;   /* cyan */
+      --neon3:#ffe86b;   /* yellow */
+      --card:#0f1022cc;
+      --card2:#0f1022f2;
+      --text:#f5f7ff;
+      --muted:#b9c2ff;
+      --line:rgba(255,255,255,0.14);
+      --shadow: 0 12px 40px rgba(0,0,0,0.45);
+      --radius: 18px;
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, "Outfit", sans-serif;
+      background:
+        radial-gradient(1200px 700px at 20% 15%, rgba(255,63,209,0.22), transparent 55%),
+        radial-gradient(900px 600px at 85% 30%, rgba(35,213,255,0.22), transparent 55%),
+        radial-gradient(800px 500px at 60% 90%, rgba(255,232,107,0.14), transparent 60%),
+        linear-gradient(135deg, var(--bg1), var(--bg2));
+      overflow-x:hidden;
+    }
+
+    /* Retro grid overlay */
+    .grid{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:0.18;
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,0.07) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.07) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: radial-gradient(circle at 50% 20%, rgba(0,0,0,1), rgba(0,0,0,0.15) 55%, rgba(0,0,0,0));
+      z-index:0;
+    }
+
+    header{
+      position:relative;
+      z-index:1;
+      padding: 44px 16px 20px;
+      text-align:center;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      border:1px solid rgba(255,255,255,0.18);
+      border-radius:999px;
+      background: rgba(15,16,34,0.35);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      backdrop-filter: blur(10px);
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+
+    h1{
+      margin:18px 0 8px;
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      line-height:1.05;
+      letter-spacing: 0.5px;
+      text-shadow:
+        0 0 10px rgba(255,63,209,0.45),
+        0 0 18px rgba(35,213,255,0.25);
+    }
+
+    .subtitle{
+      margin: 0 auto;
+      max-width: 800px;
+      color: rgba(245,247,255,0.85);
+      font-size: 1.05rem;
+    }
+
+    main{
+      position:relative;
+      z-index:1;
+      max-width: 980px;
+      margin: 18px auto 80px;
+      padding: 0 16px;
+    }
+
+    .section{
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: var(--radius);
+      padding: 22px;
+      margin: 16px 0;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .section h2{
+      margin:0 0 12px;
+      font-size: 1.35rem;
+      letter-spacing: 0.3px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .pill{
+      display:inline-flex;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      border:1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.06);
+      color: var(--muted);
+    }
+
+    .neonline{
+      height: 2px;
+      width: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, transparent, rgba(255,63,209,0.9), rgba(35,213,255,0.9), transparent);
+      opacity:0.75;
+      margin: 10px 0 16px;
+    }
+
+    p{ margin: 10px 0; color: rgba(245,247,255,0.9); }
+    ul, ol{ margin: 10px 0; padding-left: 20px; color: rgba(245,247,255,0.92); }
+    li{ margin: 6px 0; }
+
+    .two-col{
+      display:grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 16px;
+    }
+    @media (max-width: 860px){
+      .two-col{ grid-template-columns: 1fr; }
+    }
+
+    .callout{
+      border-radius: 14px;
+      padding: 14px 14px;
+      border: 1px dashed rgba(255,255,255,0.18);
+      background: rgba(0,0,0,0.16);
+      color: rgba(245,247,255,0.88);
+    }
+
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      padding: 2px 8px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      color: rgba(245,247,255,0.92);
+      font-size: 0.9rem;
+      display:inline-block;
+    }
+
+    /* Score form UI */
+    .controls{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:flex-end;
+      margin-top: 8px;
+    }
+
+    label{
+      display:block;
+      font-size: 0.85rem;
+      color: rgba(185,194,255,0.92);
+      margin-bottom: 6px;
+    }
+
+    input, button, textarea{
+      font: inherit;
+    }
+
+    input, textarea{
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(10,10,18,0.45);
+      color: var(--text);
+      outline:none;
+    }
+    input:focus, textarea:focus{
+      border-color: rgba(35,213,255,0.6);
+      box-shadow: 0 0 0 4px rgba(35,213,255,0.12);
+    }
+
+    .field{
+      min-width: 180px;
+      flex: 1;
+    }
+    .field.small{ min-width: 140px; flex: 0.6; }
+
+    .btn{
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: linear-gradient(135deg, rgba(255,63,209,0.8), rgba(35,213,255,0.8));
+      color: #071018;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.35);
+      transition: transform 0.08s ease, filter 0.2s ease;
+      min-width: 170px;
+    }
+    .btn:active{ transform: translateY(1px) scale(0.99); }
+    .btn.secondary{
+      background: rgba(255,255,255,0.06);
+      color: rgba(245,247,255,0.92);
+      font-weight: 600;
+      min-width: 170px;
+    }
+
+    table{
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+      overflow:hidden;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+    th, td{
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+      padding: 10px 10px;
+      text-align:left;
+      font-size: 0.95rem;
+    }
+    th{
+      background: rgba(255,255,255,0.06);
+      color: rgba(245,247,255,0.92);
+      font-weight: 700;
+    }
+    tr:last-child td{ border-bottom:none; }
+
+    .num{
+      font-variant-numeric: tabular-nums;
+      white-space:nowrap;
+    }
+
+    .chip{
+      display:inline-flex;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.06);
+      color: rgba(245,247,255,0.9);
+    }
+
+    .right{
+      text-align:right;
+    }
+
+    .muted{
+      color: rgba(185,194,255,0.9);
+      font-size: 0.95rem;
+    }
+
+    footer{
+      text-align:center;
+      color: rgba(185,194,255,0.85);
+      padding: 22px 16px 40px;
+      position:relative;
+      z-index:1;
+    }
+  </style>
+</head>
+<body>
+  <div class="grid"></div>
+
+  <header>
+    <div class="badge">
+      <span class="chip">Retro Mode: ON</span>
+      <span>Spelregels + scoreformulier</span>
+    </div>
+    <h1>Hatsa!</h1>
+    <p class="subtitle">In elke ronde exact voorspellen hoeveel slagen je haalt. Mis je? Dan doet het pijn. 😈</p>
+  </header>
+
+  <main>
+    <div class="two-col">
+      <section class="section">
+        <h2>Doel van het spel <span class="pill">core</span></h2>
+        <div class="neonline"></div>
+        <p>
+          In <strong>Hatsa!</strong> probeer je in elke ronde <strong>exact te voorspellen</strong>
+          hoeveel slagen je gaat halen. Hoe vaker je precies goed zit, hoe meer punten je scoort.
+          De speler met de <strong>hoogste totaalscore</strong> wint.
+        </p>
+
+        <div class="callout">
+          Snelle samenvatting: <span class="kbd">voorspel</span> → <span class="kbd">speel</span> → <span class="kbd">reken punten</span> → repeat.
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Kaarten <span class="pill">deck</span></h2>
+        <div class="neonline"></div>
+        <p>
+          Het Hatsa-deck bestaat uit meerdere kleuren. Elke kleur bevat kaarten met waarden:
+        </p>
+        <p><strong>1 t/m 9, E, D, C, B, A</strong> — <strong>A</strong> is de hoogste kaart.</p>
+        <ul>
+          <li>De hoogste kaart in de <strong>gevraagde kleur</strong> wint.</li>
+          <li>Tenzij er <strong>troef</strong> is gespeeld: <strong>troef wint altijd</strong>.</li>
+        </ul>
+      </section>
+    </div>
+
+    <section class="section">
+      <h2>Voorbereiding <span class="pill">setup</span></h2>
+      <div class="neonline"></div>
+      <ol>
+        <li>Kies een dealer (bijvoorbeeld steen–papier–schaar).</li>
+        <li>Schud het deck.</li>
+        <li>Deel per ronde het juiste aantal kaarten uit: <strong>1 oplopend tot 12 en weer terug</strong>.</li>
+        <li>Elke speler ontvangt per ronde <strong>1 actiekaart</strong>.</li>
+      </ol>
+    </section>
+
+    <section class="section">
+      <h2>Rondeverloop <span class="pill">flow</span></h2>
+      <div class="neonline"></div>
+      <ol>
+        <li><strong>Delen</strong> – spelers krijgen hun kaarten.</li>
+        <li><strong>Troef bepalen</strong> – draai de bovenste kaart open: die kleur is troef.</li>
+        <li><strong>Actiekaart-moment</strong> – spelers kiezen of ze hun actiekaart inzetten (zie hieronder).</li>
+        <li><strong>Voorspellen</strong> – aftellen 3–2–1 en vingers opsteken voor je voorspelling.</li>
+        <li><strong>Slagen spelen</strong> – kleur bekennen indien mogelijk; hoogste kaart of hoogste troef wint.</li>
+      </ol>
+    </section>
+
+    <section class="section">
+      <h2>Actiekaarten <span class="pill">one-time</span></h2>
+      <div class="neonline"></div>
+      <p>
+        Elke speler ontvangt aan het begin van het spel één willekeurige actiekaart.
+        Actiekaarten zijn eenmalige speciale acties die je alleen mag gebruiken <strong>vóór het voorspellen</strong>.
+      </p>
+
+      <p class="muted"><strong>Tijdens het actiekaart-moment (stap 3):</strong></p>
+      <ul>
+        <li>De speler links van de dealer begint.</li>
+        <li>Met de klok mee kiest iedere speler: inzetten of bewaren.</li>
+        <li>Gebruik is optioneel (geen voordeel? lekker bewaren).</li>
+        <li>Gebruik je hem: voer het effect direct uit. De kaart gaat daarna uit het spel.</li>
+      </ul>
+
+      <div class="callout">
+        De werking van elke actiekaart staat op de kaart zelf.
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Hoe voorspellen? <span class="pill">tips</span></h2>
+      <div class="neonline"></div>
+      <p>Analyseer je hand op hoge kaarten, troefkaarten en verdeling. Bedenk hoeveel slagen realistisch zijn — en hoeveel risico je wilt nemen.</p>
+    </section>
+
+    <section class="section">
+      <h2>Puntentelling <span class="pill">scoring</span></h2>
+      <div class="neonline"></div>
+      <ul>
+        <li><strong>Exact goed voorspeld:</strong> 10 punten + 5 per behaalde slag.</li>
+        <li><strong>Niet goed:</strong> geen bonus en -5 punten per verschil.</li>
+      </ul>
+      <p class="muted">
+        Voorbeeld: voorspeld 3, gehaald 2 → -5 punten. Voorspeld 5, gehaald 2 → -15 punten.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>Scoreformulier <span class="pill">live</span></h2>
+      <div class="neonline"></div>
+
+      <p class="muted">
+        Vul spelers in, voer per ronde de voorspelling & behaalde slagen in, en klik <strong>Bereken ronde</strong>.
+        Punten worden automatisch opgeteld.
+      </p>
+
+      <div class="controls">
+        <div class="field">
+          <label for="playersInput">Spelers (komma-gescheiden)</label>
+          <input id="playersInput" placeholder="Bijv. Wouter, Sam, Noor, Jip" />
+        </div>
+        <div class="field small">
+          <label for="roundInput">Ronde #</label>
+          <input id="roundInput" type="number" min="1" value="1" />
+        </div>
+        <button class="btn" onclick="setupPlayers()">Spelers instellen</button>
+        <button class="btn secondary" onclick="resetAll()">Reset alles</button>
+      </div>
+
+      <div id="scoreArea" style="margin-top:14px; display:none;">
+        <div class="controls">
+          <button class="btn" onclick="calculateRound()">Bereken ronde</button>
+          <button class="btn secondary" onclick="nextRound()">Volgende ronde</button>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Speler</th>
+              <th class="right">Voorspeld</th>
+              <th class="right">Gehaald</th>
+              <th class="right">Rondepunten</th>
+              <th class="right">Totaal</th>
+            </tr>
+          </thead>
+          <tbody id="scoreTbody"></tbody>
+        </table>
+
+        <div class="callout" style="margin-top:14px;">
+          <strong>Rekenregel:</strong>
+          Exact = <span class="kbd">10 + 5 × gehaald</span>,
+          anders = <span class="kbd">-5 × |voorspeld − gehaald|</span>.
+        </div>
+
+        <div class="section" style="margin-top:16px; background: var(--card2);">
+          <h3 style="margin-top:0;">Rondehistorie</h3>
+          <div id="history" class="muted">Nog geen rondes berekend.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Einde van het spel <span class="pill">finish</span></h2>
+      <div class="neonline"></div>
+      <p>Na de laatste ronde telt iedereen zijn punten op. De hoogste score wint.</p>
+    </section>
+  </main>
+
+  <footer>
+    Hatsa! — Miami Vice edition © <span id="year"></span>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    let players = []; // {name, total}
+    let lastRoundPoints = []; // for UI
+    const scoreArea = document.getElementById("scoreArea");
+    const tbody = document.getElementById("scoreTbody");
+    const history = document.getElementById("history");
+
+    function sanitizeName(n){
+      return n.trim().replace(/\s+/g, " ");
+    }
+
+    function setupPlayers(){
+      const raw = document.getElementById("playersInput").value;
+      const names = raw.split(",").map(sanitizeName).filter(Boolean);
+
+      if(names.length < 2){
+        alert("Vul minimaal 2 spelers in (komma-gescheiden).");
+        return;
+      }
+
+      players = names.map(n => ({ name: n, total: 0 }));
+      lastRoundPoints = players.map(() => 0);
+
+      renderTable();
+      scoreArea.style.display = "block";
+      setHistoryText("Spelers ingesteld. Vul voorspelling/haal per speler in en klik ‘Bereken ronde’.");
+    }
+
+    function renderTable(){
+      tbody.innerHTML = "";
+      players.forEach((p, idx) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td><strong>${escapeHtml(p.name)}</strong></td>
+          <td class="right"><input data-idx="${idx}" data-type="pred" type="number" min="0" style="max-width:120px; text-align:right;" placeholder="0"></td>
+          <td class="right"><input data-idx="${idx}" data-type="made" type="number" min="0" style="max-width:120px; text-align:right;" placeholder="0"></td>
+          <td class="right num" id="rp-${idx}">—</td>
+          <td class="right num" id="tot-${idx}">${p.total}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function roundPoints(pred, made){
+      // Exact: 10 + 5 per behaalde slag
+      // Niet exact: -5 per verschil
+      if(pred === made){
+        return 10 + 5 * made;
+      }
+      return -5 * Math.abs(pred - made);
+    }
+
+    function calculateRound(){
+      if(players.length === 0) return;
+
+      const inputs = tbody.querySelectorAll("input");
+      // Build arrays
+      const preds = new Array(players.length).fill(null);
+      const mades = new Array(players.length).fill(null);
+
+      inputs.forEach(inp => {
+        const idx = Number(inp.dataset.idx);
+        const type = inp.dataset.type;
+        const val = inp.value === "" ? null : Number(inp.value);
+        if(type === "pred") preds[idx] = val;
+        if(type === "made") mades[idx] = val;
+      });
+
+      // Validate
+      for(let i=0;i<players.length;i++){
+        if(preds[i] === null || mades[i] === null || Number.isNaN(preds[i]) || Number.isNaN(mades[i])){
+          alert("Vul voor elke speler zowel ‘Voorspeld’ als ‘Gehaald’ in.");
+          return;
+        }
+        if(preds[i] < 0 || mades[i] < 0){
+          alert("Gebruik geen negatieve waardes.");
+          return;
+        }
+      }
+
+      const roundNo = Number(document.getElementById("roundInput").value || 1);
+
+      // Compute & update totals
+      let summaryLines = [];
+      for(let i=0;i<players.length;i++){
+        const pts = roundPoints(preds[i], mades[i]);
+        lastRoundPoints[i] = pts;
+        players[i].total += pts;
+
+        document.getElementById(`rp-${i}`).textContent = pts;
+        document.getElementById(`tot-${i}`).textContent = players[i].total;
+
+        summaryLines.push(`${players[i].name}: voorspeld ${preds[i]}, gehaald ${mades[i]} → ${pts}p (totaal ${players[i].total})`);
+      }
+
+      setHistoryText(
+        `<strong>Ronde ${roundNo}</strong><br>` +
+        summaryLines.map(s => "• " + escapeHtml(s)).join("<br>")
+      );
+    }
+
+    function nextRound(){
+      // Clear round inputs but keep totals
+      const inputs = tbody.querySelectorAll("input");
+      inputs.forEach(i => i.value = "");
+      for(let i=0;i<players.length;i++){
+        document.getElementById(`rp-${i}`).textContent = "—";
+      }
+
+      const roundInput = document.getElementById("roundInput");
+      roundInput.value = Number(roundInput.value || 1) + 1;
+
+      setHistoryText("Nieuwe ronde klaar. Vul voorspelling/haal in en klik ‘Bereken ronde’.");
+    }
+
+    function resetAll(){
+      if(!confirm("Alles resetten? Scores en spelers gaan weg.")) return;
+
+      players = [];
+      lastRoundPoints = [];
+      tbody.innerHTML = "";
+      scoreArea.style.display = "none";
+      document.getElementById("playersInput").value = "";
+      document.getElementById("roundInput").value = 1;
+      history.textContent = "Nog geen rondes berekend.";
+    }
+
+    function setHistoryText(html){
+      history.innerHTML = html;
+    }
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+  </script>
+</body>
+</html>
