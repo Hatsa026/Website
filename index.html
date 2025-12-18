@@ -2,25 +2,20 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8" />
-  <title>Hatsa! – Spelregels & Scoreformulier</title>
+  <title>Hatsa! – Spelregels & Printbare Score-sheet</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <style>
-    /* Optional: retro font (werkt alleen als je internet hebt). Mag weg.
-    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&family=Press+Start+2P&display=swap');
-    */
-
     :root{
       --bg1:#0b0624;
       --bg2:#0c2a4a;
-      --neon1:#ff3fd1;   /* pink */
-      --neon2:#23d5ff;   /* cyan */
-      --neon3:#ffe86b;   /* yellow */
+      --neon1:#ff3fd1;
+      --neon2:#23d5ff;
+      --neon3:#ffe86b;
       --card:#0f1022cc;
       --card2:#0f1022f2;
       --text:#f5f7ff;
       --muted:#b9c2ff;
-      --line:rgba(255,255,255,0.14);
       --shadow: 0 12px 40px rgba(0,0,0,0.45);
       --radius: 18px;
     }
@@ -30,7 +25,7 @@
     body{
       margin:0;
       color:var(--text);
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, "Outfit", sans-serif;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
       background:
         radial-gradient(1200px 700px at 20% 15%, rgba(255,63,209,0.22), transparent 55%),
         radial-gradient(900px 600px at 85% 30%, rgba(35,213,255,0.22), transparent 55%),
@@ -39,12 +34,8 @@
       overflow-x:hidden;
     }
 
-    /* Retro grid overlay */
     .grid{
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      opacity:0.18;
+      position:fixed; inset:0; pointer-events:none; opacity:0.18;
       background-image:
         linear-gradient(to right, rgba(255,255,255,0.07) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(255,255,255,0.07) 1px, transparent 1px);
@@ -54,16 +45,13 @@
     }
 
     header{
-      position:relative;
-      z-index:1;
-      padding: 44px 16px 20px;
+      position:relative; z-index:1;
+      padding: 44px 16px 18px;
       text-align:center;
     }
 
     .badge{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
+      display:inline-flex; align-items:center; gap:10px;
       padding:10px 14px;
       border:1px solid rgba(255,255,255,0.18);
       border-radius:999px;
@@ -72,6 +60,16 @@
       backdrop-filter: blur(10px);
       font-size: 0.92rem;
       color: var(--muted);
+    }
+
+    .chip{
+      display:inline-flex;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.06);
+      color: rgba(245,247,255,0.9);
     }
 
     h1{
@@ -86,15 +84,14 @@
 
     .subtitle{
       margin: 0 auto;
-      max-width: 800px;
+      max-width: 900px;
       color: rgba(245,247,255,0.85);
       font-size: 1.05rem;
     }
 
     main{
-      position:relative;
-      z-index:1;
-      max-width: 980px;
+      position:relative; z-index:1;
+      max-width: 1040px;
       margin: 18px auto 80px;
       padding: 0 16px;
     }
@@ -129,8 +126,7 @@
     }
 
     .neonline{
-      height: 2px;
-      width: 100%;
+      height: 2px; width: 100%;
       border-radius: 999px;
       background: linear-gradient(90deg, transparent, rgba(255,63,209,0.9), rgba(35,213,255,0.9), transparent);
       opacity:0.75;
@@ -140,36 +136,8 @@
     p{ margin: 10px 0; color: rgba(245,247,255,0.9); }
     ul, ol{ margin: 10px 0; padding-left: 20px; color: rgba(245,247,255,0.92); }
     li{ margin: 6px 0; }
+    .muted{ color: rgba(185,194,255,0.92); }
 
-    .two-col{
-      display:grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 16px;
-    }
-    @media (max-width: 860px){
-      .two-col{ grid-template-columns: 1fr; }
-    }
-
-    .callout{
-      border-radius: 14px;
-      padding: 14px 14px;
-      border: 1px dashed rgba(255,255,255,0.18);
-      background: rgba(0,0,0,0.16);
-      color: rgba(245,247,255,0.88);
-    }
-
-    .kbd{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      padding: 2px 8px;
-      border-radius: 8px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(255,255,255,0.06);
-      color: rgba(245,247,255,0.92);
-      font-size: 0.9rem;
-      display:inline-block;
-    }
-
-    /* Score form UI */
     .controls{
       display:flex;
       flex-wrap:wrap;
@@ -185,11 +153,9 @@
       margin-bottom: 6px;
     }
 
-    input, button, textarea{
-      font: inherit;
-    }
+    input, select, button{ font: inherit; }
 
-    input, textarea{
+    input, select{
       width: 100%;
       padding: 10px 12px;
       border-radius: 12px;
@@ -198,16 +164,16 @@
       color: var(--text);
       outline:none;
     }
-    input:focus, textarea:focus{
+    input:focus, select:focus{
       border-color: rgba(35,213,255,0.6);
       box-shadow: 0 0 0 4px rgba(35,213,255,0.12);
     }
 
     .field{
-      min-width: 180px;
+      min-width: 210px;
       flex: 1;
     }
-    .field.small{ min-width: 140px; flex: 0.6; }
+    .field.small{ min-width: 170px; flex: 0.65; }
 
     .btn{
       padding: 10px 12px;
@@ -215,63 +181,163 @@
       border: 1px solid rgba(255,255,255,0.16);
       background: linear-gradient(135deg, rgba(255,63,209,0.8), rgba(35,213,255,0.8));
       color: #071018;
-      font-weight: 700;
+      font-weight: 900;
       cursor: pointer;
       box-shadow: 0 10px 28px rgba(0,0,0,0.35);
-      transition: transform 0.08s ease, filter 0.2s ease;
-      min-width: 170px;
+      min-width: 190px;
     }
-    .btn:active{ transform: translateY(1px) scale(0.99); }
     .btn.secondary{
       background: rgba(255,255,255,0.06);
       color: rgba(245,247,255,0.92);
-      font-weight: 600;
-      min-width: 170px;
+      font-weight: 800;
+      min-width: 190px;
+    }
+
+    .checkrow{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.05);
+      margin-top: 10px;
+    }
+    .checkrow input[type="checkbox"]{
+      width: 18px;
+      height: 18px;
+      margin-top: 3px;
+      accent-color: #23d5ff;
+    }
+    .checkrow .title{
+      font-weight: 900;
+      margin: 0 0 4px;
+      color: rgba(245,247,255,0.95);
+    }
+    .checkrow .desc{
+      margin: 0;
+      color: rgba(185,194,255,0.95);
+      font-size: 0.95rem;
+      line-height: 1.35;
+    }
+
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      padding: 2px 8px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      color: rgba(245,247,255,0.92);
+      font-size: 0.9rem;
+      display:inline-block;
+    }
+
+    .callout{
+      border-radius: 14px;
+      padding: 14px 14px;
+      border: 1px dashed rgba(255,255,255,0.18);
+      background: rgba(0,0,0,0.16);
+      color: rgba(245,247,255,0.88);
+      margin-top: 12px;
+    }
+
+    /* Names */
+    .names{
+      display:grid;
+      grid-template-columns: repeat(4, minmax(160px, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+    @media (max-width: 900px){
+      .names{ grid-template-columns: repeat(2, minmax(160px, 1fr)); }
+    }
+    @media (max-width: 520px){
+      .names{ grid-template-columns: 1fr; }
+    }
+
+    /* Sheet */
+    .sheet-wrap{ display:none; margin-top: 16px; }
+    .sheet{
+      background: var(--card2);
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 18px;
+      padding: 18px;
+      overflow:auto;
+    }
+
+    .sheet-header{
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      margin-bottom: 12px;
+    }
+
+    .sheet-title{
+      font-size: 1.35rem;
+      font-weight: 900;
+      letter-spacing: 0.3px;
+      margin: 0;
+      text-shadow:
+        0 0 8px rgba(255,63,209,0.35),
+        0 0 12px rgba(35,213,255,0.20);
+    }
+
+    .sheet-meta{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      color: rgba(185,194,255,0.95);
+      font-size: 0.95rem;
+    }
+
+    .meta-box{
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      padding: 8px 10px;
+      white-space:nowrap;
     }
 
     table{
       width: 100%;
       border-collapse: collapse;
-      margin-top: 14px;
+      margin-top: 10px;
       overflow:hidden;
       border-radius: 14px;
       border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.12);
     }
+
     th, td{
       border-bottom: 1px solid rgba(255,255,255,0.10);
-      padding: 10px 10px;
+      border-right: 1px solid rgba(255,255,255,0.08);
+      padding: 8px 8px;
       text-align:left;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
+      vertical-align:middle;
     }
-    th{
-      background: rgba(255,255,255,0.06);
-      color: rgba(245,247,255,0.92);
-      font-weight: 700;
-    }
+    th:last-child, td:last-child{ border-right:none; }
     tr:last-child td{ border-bottom:none; }
 
-    .num{
-      font-variant-numeric: tabular-nums;
-      white-space:nowrap;
+    th{
+      background: rgba(255,255,255,0.07);
+      color: rgba(245,247,255,0.92);
+      font-weight: 900;
     }
 
-    .chip{
-      display:inline-flex;
-      padding: 4px 10px;
-      border-radius: 999px;
+    .center{ text-align:center; }
+    .num{ font-variant-numeric: tabular-nums; white-space:nowrap; }
+    .blank{ height: 28px; }
+
+    .subhead{
       font-size: 0.82rem;
-      border: 1px solid rgba(255,255,255,0.16);
-      background: rgba(255,255,255,0.06);
-      color: rgba(245,247,255,0.9);
-    }
-
-    .right{
-      text-align:right;
-    }
-
-    .muted{
-      color: rgba(185,194,255,0.9);
-      font-size: 0.95rem;
+      color: rgba(185,194,255,0.95);
+      font-weight: 900;
+      letter-spacing: 0.2px;
+      background: rgba(255,255,255,0.05) !important;
     }
 
     footer{
@@ -281,171 +347,134 @@
       position:relative;
       z-index:1;
     }
+
+    /* PRINT MODE */
+    @media print{
+      body{ background: #09061f !important; }
+      .grid, header, #rules, #generatorControls, footer{ display:none !important; }
+      main{ margin: 0 !important; max-width: none !important; padding: 0 !important; }
+      .section{ box-shadow:none !important; border:none !important; background: transparent !important; margin:0 !important; padding:0 !important; }
+      .sheet-wrap{ display:block !important; margin:0 !important; }
+      .sheet{ border:none !important; border-radius:0 !important; background: transparent !important; padding: 10mm !important; }
+      table{ background: rgba(0,0,0,0.0) !important; }
+      th{ background: rgba(255,255,255,0.08) !important; }
+      @page{ size: A4 landscape; margin: 10mm; }
+    }
   </style>
 </head>
+
 <body>
   <div class="grid"></div>
 
   <header>
     <div class="badge">
       <span class="chip">Retro Mode: ON</span>
-      <span>Spelregels + scoreformulier</span>
+      <span>Spelregels + printbare score-sheet</span>
     </div>
     <h1>Hatsa!</h1>
-    <p class="subtitle">In elke ronde exact voorspellen hoeveel slagen je haalt. Mis je? Dan doet het pijn. 😈</p>
+    <p class="subtitle">Exact voorspellen. Neon vibes. En nu: namen invullen voor je score-sheet.</p>
   </header>
 
   <main>
-    <div class="two-col">
-      <section class="section">
-        <h2>Doel van het spel <span class="pill">core</span></h2>
-        <div class="neonline"></div>
-        <p>
-          In <strong>Hatsa!</strong> probeer je in elke ronde <strong>exact te voorspellen</strong>
-          hoeveel slagen je gaat halen. Hoe vaker je precies goed zit, hoe meer punten je scoort.
-          De speler met de <strong>hoogste totaalscore</strong> wint.
-        </p>
-
-        <div class="callout">
-          Snelle samenvatting: <span class="kbd">voorspel</span> → <span class="kbd">speel</span> → <span class="kbd">reken punten</span> → repeat.
-        </div>
-      </section>
-
-      <section class="section">
-        <h2>Kaarten <span class="pill">deck</span></h2>
-        <div class="neonline"></div>
-        <p>
-          Het Hatsa-deck bestaat uit meerdere kleuren. Elke kleur bevat kaarten met waarden:
-        </p>
-        <p><strong>1 t/m 9, E, D, C, B, A</strong> — <strong>A</strong> is de hoogste kaart.</p>
-        <ul>
-          <li>De hoogste kaart in de <strong>gevraagde kleur</strong> wint.</li>
-          <li>Tenzij er <strong>troef</strong> is gespeeld: <strong>troef wint altijd</strong>.</li>
-        </ul>
-      </section>
-    </div>
-
-    <section class="section">
-      <h2>Voorbereiding <span class="pill">setup</span></h2>
+    <!-- Rules -->
+    <section id="rules" class="section">
+      <h2>Spelregels <span class="pill">Hatsa!</span></h2>
       <div class="neonline"></div>
-      <ol>
-        <li>Kies een dealer (bijvoorbeeld steen–papier–schaar).</li>
-        <li>Schud het deck.</li>
-        <li>Deel per ronde het juiste aantal kaarten uit: <strong>1 oplopend tot 12 en weer terug</strong>.</li>
-        <li>Elke speler ontvangt per ronde <strong>1 actiekaart</strong>.</li>
-      </ol>
+      <p class="muted">*(Ongewijzigd — alleen generator hieronder uitgebreid met speler-namen.)*</p>
     </section>
 
-    <section class="section">
-      <h2>Rondeverloop <span class="pill">flow</span></h2>
-      <div class="neonline"></div>
-      <ol>
-        <li><strong>Delen</strong> – spelers krijgen hun kaarten.</li>
-        <li><strong>Troef bepalen</strong> – draai de bovenste kaart open: die kleur is troef.</li>
-        <li><strong>Actiekaart-moment</strong> – spelers kiezen of ze hun actiekaart inzetten (zie hieronder).</li>
-        <li><strong>Voorspellen</strong> – aftellen 3–2–1 en vingers opsteken voor je voorspelling.</li>
-        <li><strong>Slagen spelen</strong> – kleur bekennen indien mogelijk; hoogste kaart of hoogste troef wint.</li>
-      </ol>
-    </section>
-
-    <section class="section">
-      <h2>Actiekaarten <span class="pill">one-time</span></h2>
-      <div class="neonline"></div>
-      <p>
-        Elke speler ontvangt aan het begin van het spel één willekeurige actiekaart.
-        Actiekaarten zijn eenmalige speciale acties die je alleen mag gebruiken <strong>vóór het voorspellen</strong>.
-      </p>
-
-      <p class="muted"><strong>Tijdens het actiekaart-moment (stap 3):</strong></p>
-      <ul>
-        <li>De speler links van de dealer begint.</li>
-        <li>Met de klok mee kiest iedere speler: inzetten of bewaren.</li>
-        <li>Gebruik is optioneel (geen voordeel? lekker bewaren).</li>
-        <li>Gebruik je hem: voer het effect direct uit. De kaart gaat daarna uit het spel.</li>
-      </ul>
-
-      <div class="callout">
-        De werking van elke actiekaart staat op de kaart zelf.
-      </div>
-    </section>
-
-    <section class="section">
-      <h2>Hoe voorspellen? <span class="pill">tips</span></h2>
-      <div class="neonline"></div>
-      <p>Analyseer je hand op hoge kaarten, troefkaarten en verdeling. Bedenk hoeveel slagen realistisch zijn — en hoeveel risico je wilt nemen.</p>
-    </section>
-
-    <section class="section">
-      <h2>Puntentelling <span class="pill">scoring</span></h2>
-      <div class="neonline"></div>
-      <ul>
-        <li><strong>Exact goed voorspeld:</strong> 10 punten + 5 per behaalde slag.</li>
-        <li><strong>Niet goed:</strong> geen bonus en -5 punten per verschil.</li>
-      </ul>
-      <p class="muted">
-        Voorbeeld: voorspeld 3, gehaald 2 → -5 punten. Voorspeld 5, gehaald 2 → -15 punten.
-      </p>
-    </section>
-
-    <section class="section">
-      <h2>Scoreformulier <span class="pill">live</span></h2>
+    <!-- Generator -->
+    <section id="generatorControls" class="section">
+      <h2>Printbare score-sheet <span class="pill">generator</span></h2>
       <div class="neonline"></div>
 
       <p class="muted">
-        Vul spelers in, voer per ronde de voorspelling & behaalde slagen in, en klik <strong>Bereken ronde</strong>.
-        Punten worden automatisch opgeteld.
+        Kies het aantal spelers en rondeschema. Vul daarna de speler-namen in (optioneel).
+        Let op: <strong>aantal kaarten = het rondegetal</strong>.
       </p>
 
       <div class="controls">
-        <div class="field">
-          <label for="playersInput">Spelers (komma-gescheiden)</label>
-          <input id="playersInput" placeholder="Bijv. Wouter, Sam, Noor, Jip" />
-        </div>
         <div class="field small">
-          <label for="roundInput">Ronde #</label>
-          <input id="roundInput" type="number" min="1" value="1" />
+          <label for="playerCount">Aantal spelers</label>
+          <select id="playerCount" onchange="renderNameInputs()">
+            <option value="2">2</option><option value="3">3</option><option value="4" selected>4</option>
+            <option value="5">5</option><option value="6">6</option><option value="7">7</option>
+            <option value="8">8</option><option value="9">9</option><option value="10">10</option>
+          </select>
         </div>
-        <button class="btn" onclick="setupPlayers()">Spelers instellen</button>
-        <button class="btn secondary" onclick="resetAll()">Reset alles</button>
+
+        <div class="field">
+          <label for="roundMode">Rondeschema</label>
+          <select id="roundMode">
+            <option value="updown" selected>Standaard (1 → max → 1)</option>
+            <option value="up">Alleen oplopend (1 → max)</option>
+            <option value="down">Alleen aflopend (max → 1)</option>
+          </select>
+        </div>
+
+        <div class="field small">
+          <label for="maxCards">Max kaarten per speler</label>
+          <select id="maxCards">
+            <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+            <option>11</option><option selected>12</option>
+          </select>
+        </div>
+
+        <button class="btn" onclick="generateSheet()">Genereer score-sheet</button>
+        <button class="btn secondary" onclick="window.print()">Print score-sheet</button>
       </div>
 
-      <div id="scoreArea" style="margin-top:14px; display:none;">
-        <div class="controls">
-          <button class="btn" onclick="calculateRound()">Bereken ronde</button>
-          <button class="btn secondary" onclick="nextRound()">Volgende ronde</button>
+      <div class="checkrow">
+        <input type="checkbox" id="smallGame" />
+        <div>
+          <p class="title">Kleiner spel</p>
+          <p class="desc">
+            Schema: <span class="kbd">even omhoog</span> en daarna <span class="kbd">oneven omlaag</span>.
+            Voorbeeld bij max = 12: <span class="kbd">2 4 6 8 10 12 11 9 7 5 3 1</span>
+          </p>
         </div>
+      </div>
 
-        <table>
-          <thead>
-            <tr>
-              <th>Speler</th>
-              <th class="right">Voorspeld</th>
-              <th class="right">Gehaald</th>
-              <th class="right">Rondepunten</th>
-              <th class="right">Totaal</th>
-            </tr>
-          </thead>
-          <tbody id="scoreTbody"></tbody>
-        </table>
+      <div style="margin-top:14px;">
+        <p class="muted" style="margin:0 0 8px;"><strong>Speler-namen</strong> (optioneel)</p>
+        <div class="names" id="namesGrid"></div>
+      </div>
 
-        <div class="callout" style="margin-top:14px;">
-          <strong>Rekenregel:</strong>
-          Exact = <span class="kbd">10 + 5 × gehaald</span>,
-          anders = <span class="kbd">-5 × |voorspeld − gehaald|</span>.
-        </div>
-
-        <div class="section" style="margin-top:16px; background: var(--card2);">
-          <h3 style="margin-top:0;">Rondehistorie</h3>
-          <div id="history" class="muted">Nog geen rondes berekend.</div>
-        </div>
+      <div class="callout">
+        Print is automatisch <span class="kbd">A4 landscape</span>.
       </div>
     </section>
 
-    <section class="section">
-      <h2>Einde van het spel <span class="pill">finish</span></h2>
-      <div class="neonline"></div>
-      <p>Na de laatste ronde telt iedereen zijn punten op. De hoogste score wint.</p>
+    <!-- Printable Sheet -->
+    <section class="section sheet-wrap" id="sheetWrap">
+      <div class="sheet" id="sheet">
+        <div class="sheet-header">
+          <div>
+            <p class="sheet-title" style="margin:0;">Hatsa! Score-sheet</p>
+            <div class="neonline" style="margin:10px 0 0;"></div>
+          </div>
+          <div class="sheet-meta">
+            <div class="meta-box">Datum: __________________</div>
+            <div class="meta-box">Locatie: __________________</div>
+            <div class="meta-box">Dealer start: ____________</div>
+          </div>
+        </div>
+
+        <div class="sheet-meta" style="margin-bottom:10px;">
+          <div class="meta-box" id="metaPlayers">Spelers: —</div>
+          <div class="meta-box" id="metaRounds">Rondes: —</div>
+          <div class="meta-box" id="metaVariant">Variant: —</div>
+          <div class="meta-box">
+            Rekenregel:
+            <span class="kbd">Exact = 10 + 5×gehaald</span> /
+            <span class="kbd">Mis = -5×|verschil|</span>
+          </div>
+        </div>
+
+        <div id="tableArea"></div>
+      </div>
     </section>
+
   </main>
 
   <footer>
@@ -455,136 +484,6 @@
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    let players = []; // {name, total}
-    let lastRoundPoints = []; // for UI
-    const scoreArea = document.getElementById("scoreArea");
-    const tbody = document.getElementById("scoreTbody");
-    const history = document.getElementById("history");
-
-    function sanitizeName(n){
-      return n.trim().replace(/\s+/g, " ");
-    }
-
-    function setupPlayers(){
-      const raw = document.getElementById("playersInput").value;
-      const names = raw.split(",").map(sanitizeName).filter(Boolean);
-
-      if(names.length < 2){
-        alert("Vul minimaal 2 spelers in (komma-gescheiden).");
-        return;
-      }
-
-      players = names.map(n => ({ name: n, total: 0 }));
-      lastRoundPoints = players.map(() => 0);
-
-      renderTable();
-      scoreArea.style.display = "block";
-      setHistoryText("Spelers ingesteld. Vul voorspelling/haal per speler in en klik ‘Bereken ronde’.");
-    }
-
-    function renderTable(){
-      tbody.innerHTML = "";
-      players.forEach((p, idx) => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td><strong>${escapeHtml(p.name)}</strong></td>
-          <td class="right"><input data-idx="${idx}" data-type="pred" type="number" min="0" style="max-width:120px; text-align:right;" placeholder="0"></td>
-          <td class="right"><input data-idx="${idx}" data-type="made" type="number" min="0" style="max-width:120px; text-align:right;" placeholder="0"></td>
-          <td class="right num" id="rp-${idx}">—</td>
-          <td class="right num" id="tot-${idx}">${p.total}</td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    function roundPoints(pred, made){
-      // Exact: 10 + 5 per behaalde slag
-      // Niet exact: -5 per verschil
-      if(pred === made){
-        return 10 + 5 * made;
-      }
-      return -5 * Math.abs(pred - made);
-    }
-
-    function calculateRound(){
-      if(players.length === 0) return;
-
-      const inputs = tbody.querySelectorAll("input");
-      // Build arrays
-      const preds = new Array(players.length).fill(null);
-      const mades = new Array(players.length).fill(null);
-
-      inputs.forEach(inp => {
-        const idx = Number(inp.dataset.idx);
-        const type = inp.dataset.type;
-        const val = inp.value === "" ? null : Number(inp.value);
-        if(type === "pred") preds[idx] = val;
-        if(type === "made") mades[idx] = val;
-      });
-
-      // Validate
-      for(let i=0;i<players.length;i++){
-        if(preds[i] === null || mades[i] === null || Number.isNaN(preds[i]) || Number.isNaN(mades[i])){
-          alert("Vul voor elke speler zowel ‘Voorspeld’ als ‘Gehaald’ in.");
-          return;
-        }
-        if(preds[i] < 0 || mades[i] < 0){
-          alert("Gebruik geen negatieve waardes.");
-          return;
-        }
-      }
-
-      const roundNo = Number(document.getElementById("roundInput").value || 1);
-
-      // Compute & update totals
-      let summaryLines = [];
-      for(let i=0;i<players.length;i++){
-        const pts = roundPoints(preds[i], mades[i]);
-        lastRoundPoints[i] = pts;
-        players[i].total += pts;
-
-        document.getElementById(`rp-${i}`).textContent = pts;
-        document.getElementById(`tot-${i}`).textContent = players[i].total;
-
-        summaryLines.push(`${players[i].name}: voorspeld ${preds[i]}, gehaald ${mades[i]} → ${pts}p (totaal ${players[i].total})`);
-      }
-
-      setHistoryText(
-        `<strong>Ronde ${roundNo}</strong><br>` +
-        summaryLines.map(s => "• " + escapeHtml(s)).join("<br>")
-      );
-    }
-
-    function nextRound(){
-      // Clear round inputs but keep totals
-      const inputs = tbody.querySelectorAll("input");
-      inputs.forEach(i => i.value = "");
-      for(let i=0;i<players.length;i++){
-        document.getElementById(`rp-${i}`).textContent = "—";
-      }
-
-      const roundInput = document.getElementById("roundInput");
-      roundInput.value = Number(roundInput.value || 1) + 1;
-
-      setHistoryText("Nieuwe ronde klaar. Vul voorspelling/haal in en klik ‘Bereken ronde’.");
-    }
-
-    function resetAll(){
-      if(!confirm("Alles resetten? Scores en spelers gaan weg.")) return;
-
-      players = [];
-      lastRoundPoints = [];
-      tbody.innerHTML = "";
-      scoreArea.style.display = "none";
-      document.getElementById("playersInput").value = "";
-      document.getElementById("roundInput").value = 1;
-      history.textContent = "Nog geen rondes berekend.";
-    }
-
-    function setHistoryText(html){
-      history.innerHTML = html;
-    }
-
     function escapeHtml(str){
       return String(str)
         .replaceAll("&","&amp;")
@@ -593,6 +492,130 @@
         .replaceAll('"',"&quot;")
         .replaceAll("'","&#039;");
     }
+
+    function buildRoundsStandard(max, mode){
+      if(mode === "up") return Array.from({length:max}, (_,i)=>i+1);
+      if(mode === "down") return Array.from({length:max}, (_,i)=>max-i);
+
+      // updown: 1..max..1 (zonder dubbele max)
+      const up = Array.from({length:max}, (_,i)=>i+1);
+      const down = Array.from({length:max-1}, (_,i)=>(max-1)-i);
+      return up.concat(down);
+    }
+
+    function buildRoundsSmallGame(max){
+      const evensMax = (max % 2 === 0) ? max : max - 1;
+      const evens = [];
+      for(let x=2; x<=evensMax; x+=2) evens.push(x);
+
+      const oddsStart = (max % 2 === 0) ? max - 1 : max;
+      const odds = [];
+      for(let x=oddsStart; x>=1; x-=2) odds.push(x);
+
+      if(evens.length === 0) return [1];
+      return evens.concat(odds);
+    }
+
+    function getPlayerNames(playerCount){
+      const names = [];
+      for(let i=1;i<=playerCount;i++){
+        const inp = document.getElementById(`pname-${i}`);
+        const raw = inp ? inp.value.trim() : "";
+        names.push(raw || `Speler ${i}`);
+      }
+      return names;
+    }
+
+    function renderNameInputs(){
+      const count = parseInt(document.getElementById("playerCount").value, 10);
+      const grid = document.getElementById("namesGrid");
+      grid.innerHTML = "";
+
+      for(let i=1;i<=count;i++){
+        const wrap = document.createElement("div");
+        wrap.className = "field";
+        wrap.innerHTML = `
+          <label for="pname-${i}">Speler ${i}</label>
+          <input id="pname-${i}" placeholder="Naam..." />
+        `;
+        grid.appendChild(wrap);
+      }
+    }
+
+    function generateSheet(){
+      const playerCount = parseInt(document.getElementById("playerCount").value, 10);
+      const max = parseInt(document.getElementById("maxCards").value, 10);
+      const mode = document.getElementById("roundMode").value;
+      const small = document.getElementById("smallGame").checked;
+
+      const rounds = small ? buildRoundsSmallGame(max) : buildRoundsStandard(max, mode);
+      const names = getPlayerNames(playerCount);
+
+      // meta
+      document.getElementById("metaPlayers").textContent = `Spelers: ${names.join(", ")}`;
+      document.getElementById("metaRounds").textContent = `Rondes (${rounds.length}): ${rounds.join("–")}`;
+      document.getElementById("metaVariant").textContent = small ? "Variant: Kleiner spel (even omhoog, oneven omlaag)" : "Variant: Standaard";
+
+      // table
+      const tableArea = document.getElementById("tableArea");
+
+      let html = `
+        <table>
+          <thead>
+            <tr>
+              <th rowspan="2" class="center num">Ronde</th>
+              <th rowspan="2" class="center num">Kaarten</th>
+      `;
+
+      for(let p=0; p<playerCount; p++){
+        html += `<th colspan="3" class="center">${escapeHtml(names[p])}</th>`;
+      }
+
+      html += `</tr><tr class="subhead">`;
+
+      for(let p=0; p<playerCount; p++){
+        html += `
+          <th class="center">Voorspeld</th>
+          <th class="center">Gehaald</th>
+          <th class="center">Punten</th>
+        `;
+      }
+
+      html += `</tr></thead><tbody>`;
+
+      for(let i=0; i<rounds.length; i++){
+        html += `<tr>
+          <td class="center num">${i+1}</td>
+          <td class="center num">${rounds[i]}</td>
+        `;
+
+        for(let p=0; p<playerCount; p++){
+          html += `<td class="blank"></td><td class="blank"></td><td class="blank"></td>`;
+        }
+
+        html += `</tr>`;
+      }
+
+      // totals row
+      html += `<tr>
+        <td colspan="2" class="center"><strong>Totaal</strong></td>`;
+      for(let p=0; p<playerCount; p++){
+        html += `<td colspan="2" class="center muted">—</td><td class="blank"></td>`;
+      }
+      html += `</tr>`;
+
+      html += `</tbody></table>`;
+
+      tableArea.innerHTML = html;
+
+      // show sheet
+      const wrap = document.getElementById("sheetWrap");
+      wrap.style.display = "block";
+      wrap.scrollIntoView({behavior: "smooth", block: "start"});
+    }
+
+    // init
+    renderNameInputs();
   </script>
 </body>
 </html>
