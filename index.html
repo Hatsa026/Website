@@ -16,6 +16,7 @@
       --card2:#0f1022f2;
       --text:#f5f7ff;
       --muted:#b9c2ff;
+      --line:rgba(255,255,255,0.14);
       --shadow: 0 12px 40px rgba(0,0,0,0.45);
       --radius: 18px;
     }
@@ -34,8 +35,12 @@
       overflow-x:hidden;
     }
 
+    /* Retro grid overlay */
     .grid{
-      position:fixed; inset:0; pointer-events:none; opacity:0.18;
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:0.18;
       background-image:
         linear-gradient(to right, rgba(255,255,255,0.07) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(255,255,255,0.07) 1px, transparent 1px);
@@ -84,14 +89,14 @@
 
     .subtitle{
       margin: 0 auto;
-      max-width: 900px;
+      max-width: 980px;
       color: rgba(245,247,255,0.85);
       font-size: 1.05rem;
     }
 
     main{
       position:relative; z-index:1;
-      max-width: 1040px;
+      max-width: 1100px;
       margin: 18px auto 80px;
       padding: 0 16px;
     }
@@ -126,18 +131,41 @@
     }
 
     .neonline{
-      height: 2px; width: 100%;
+      height: 2px;
+      width: 100%;
       border-radius: 999px;
       background: linear-gradient(90deg, transparent, rgba(255,63,209,0.9), rgba(35,213,255,0.9), transparent);
       opacity:0.75;
       margin: 10px 0 16px;
     }
 
-    p{ margin: 10px 0; color: rgba(245,247,255,0.9); }
+    p{ margin: 10px 0; color: rgba(245,247,255,0.92); }
     ul, ol{ margin: 10px 0; padding-left: 20px; color: rgba(245,247,255,0.92); }
     li{ margin: 6px 0; }
-    .muted{ color: rgba(185,194,255,0.92); }
+    .muted{ color: rgba(185,194,255,0.95); }
+    .strong{ font-weight: 900; }
 
+    .callout{
+      border-radius: 14px;
+      padding: 14px 14px;
+      border: 1px dashed rgba(255,255,255,0.18);
+      background: rgba(0,0,0,0.16);
+      color: rgba(245,247,255,0.88);
+      margin-top: 12px;
+    }
+
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      padding: 2px 8px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      color: rgba(245,247,255,0.92);
+      font-size: 0.9rem;
+      display:inline-block;
+    }
+
+    /* Controls */
     .controls{
       display:flex;
       flex-wrap:wrap;
@@ -153,9 +181,9 @@
       margin-bottom: 6px;
     }
 
-    input, select, button{ font: inherit; }
+    input, select, button, textarea{ font: inherit; }
 
-    input, select{
+    input, select, textarea{
       width: 100%;
       padding: 10px 12px;
       border-radius: 12px;
@@ -164,33 +192,30 @@
       color: var(--text);
       outline:none;
     }
-    input:focus, select:focus{
+    input:focus, select:focus, textarea:focus{
       border-color: rgba(35,213,255,0.6);
       box-shadow: 0 0 0 4px rgba(35,213,255,0.12);
     }
 
-    .field{
-      min-width: 210px;
-      flex: 1;
-    }
+    .field{ min-width: 210px; flex: 1; }
     .field.small{ min-width: 170px; flex: 0.65; }
 
     .btn{
       padding: 10px 12px;
       border-radius: 14px;
       border: 1px solid rgba(255,255,255,0.16);
-      background: linear-gradient(135deg, rgba(255,63,209,0.8), rgba(35,213,255,0.8));
+      background: linear-gradient(135deg, rgba(255,63,209,0.85), rgba(35,213,255,0.85));
       color: #071018;
       font-weight: 900;
       cursor: pointer;
       box-shadow: 0 10px 28px rgba(0,0,0,0.35);
-      min-width: 190px;
+      min-width: 200px;
     }
     .btn.secondary{
       background: rgba(255,255,255,0.06);
       color: rgba(245,247,255,0.92);
       font-weight: 800;
-      min-width: 190px;
+      min-width: 200px;
     }
 
     .checkrow{
@@ -221,27 +246,7 @@
       line-height: 1.35;
     }
 
-    .kbd{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      padding: 2px 8px;
-      border-radius: 8px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(255,255,255,0.06);
-      color: rgba(245,247,255,0.92);
-      font-size: 0.9rem;
-      display:inline-block;
-    }
-
-    .callout{
-      border-radius: 14px;
-      padding: 14px 14px;
-      border: 1px dashed rgba(255,255,255,0.18);
-      background: rgba(0,0,0,0.16);
-      color: rgba(245,247,255,0.88);
-      margin-top: 12px;
-    }
-
-    /* Names */
+    /* Names grid */
     .names{
       display:grid;
       grid-template-columns: repeat(4, minmax(160px, 1fr));
@@ -255,7 +260,7 @@
       .names{ grid-template-columns: 1fr; }
     }
 
-    /* Sheet */
+    /* Sheet area */
     .sheet-wrap{ display:none; margin-top: 16px; }
     .sheet{
       background: var(--card2);
@@ -301,23 +306,36 @@
       white-space:nowrap;
     }
 
+    /* Print table */
+    .print-page{
+      margin-top: 10px;
+    }
+    .page-title{
+      margin: 8px 0 6px;
+      font-weight: 900;
+      color: rgba(245,247,255,0.92);
+    }
+
     table{
       width: 100%;
       border-collapse: collapse;
-      margin-top: 10px;
-      overflow:hidden;
+      margin-top: 8px;
       border-radius: 14px;
       border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(0,0,0,0.12);
+      background: rgba(0,0,0,0.10);
+      table-layout: fixed;
     }
 
     th, td{
       border-bottom: 1px solid rgba(255,255,255,0.10);
       border-right: 1px solid rgba(255,255,255,0.08);
-      padding: 8px 8px;
-      text-align:left;
+      padding: 7px 6px;
+      text-align:center;
       font-size: 0.92rem;
       vertical-align:middle;
+      overflow:hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     th:last-child, td:last-child{ border-right:none; }
     tr:last-child td{ border-bottom:none; }
@@ -328,17 +346,15 @@
       font-weight: 900;
     }
 
-    .center{ text-align:center; }
-    .num{ font-variant-numeric: tabular-nums; white-space:nowrap; }
-    .blank{ height: 28px; }
-
-    .subhead{
+    .subhead th{
       font-size: 0.82rem;
-      color: rgba(185,194,255,0.95);
-      font-weight: 900;
-      letter-spacing: 0.2px;
-      background: rgba(255,255,255,0.05) !important;
+      color: rgba(185,194,255,0.98);
+      background: rgba(255,255,255,0.05);
     }
+
+    .num{ font-variant-numeric: tabular-nums; }
+    .blank{ height: 26px; }
+    .left{ text-align:left; }
 
     footer{
       text-align:center;
@@ -351,13 +367,38 @@
     /* PRINT MODE */
     @media print{
       body{ background: #09061f !important; }
-      .grid, header, #rules, #generatorControls, footer{ display:none !important; }
+      .grid, header, #generatorControls, footer{ display:none !important; }
       main{ margin: 0 !important; max-width: none !important; padding: 0 !important; }
-      .section{ box-shadow:none !important; border:none !important; background: transparent !important; margin:0 !important; padding:0 !important; }
-      .sheet-wrap{ display:block !important; margin:0 !important; }
-      .sheet{ border:none !important; border-radius:0 !important; background: transparent !important; padding: 10mm !important; }
-      table{ background: rgba(0,0,0,0.0) !important; }
-      th{ background: rgba(255,255,255,0.08) !important; }
+      .section{
+        box-shadow:none !important;
+        border:none !important;
+        background: transparent !important;
+        margin:0 !important;
+        padding:0 !important;
+      }
+      #rules{
+        display:block !important;
+        padding: 8mm 10mm 0 10mm !important;
+      }
+      .sheet-wrap{ display:block !important; }
+      .sheet{
+        border:none !important;
+        border-radius:0 !important;
+        background: transparent !important;
+        padding: 6mm 10mm 10mm 10mm !important;
+      }
+
+      /* Print typography */
+      #rules h2{ font-size: 14pt !important; }
+      #rules h3{ font-size: 11pt !important; margin-top: 8pt !important; }
+      #rules p, #rules li{ font-size: 9.5pt !important; line-height: 1.25 !important; }
+      .callout{ border-style: solid !important; }
+
+      table{ border-radius: 0 !important; }
+      th, td{ font-size: 8.6pt !important; padding: 5px 4px !important; }
+      .subhead th{ font-size: 7.6pt !important; }
+
+      .print-break{ page-break-after: always; break-after: page; }
       @page{ size: A4 landscape; margin: 10mm; }
     }
   </style>
@@ -372,25 +413,116 @@
       <span>Spelregels + printbare score-sheet</span>
     </div>
     <h1>Hatsa!</h1>
-    <p class="subtitle">Exact voorspellen. Neon vibes. En nu: namen invullen voor je score-sheet.</p>
+    <p class="subtitle">
+      Kaartspel waarin je elke ronde exact voorspelt hoeveel slagen je haalt.
+      Kies zelf je spelvorm en hoeveel rondes je speelt.
+    </p>
   </header>
 
   <main>
-    <!-- Rules -->
+
+    <!-- RULES -->
     <section id="rules" class="section">
-      <h2>Spelregels <span class="pill">Hatsa!</span></h2>
+      <h2>Hatsa! Spelregels <span class="pill">official-ish</span></h2>
       <div class="neonline"></div>
-      <p class="muted">*(Ongewijzigd — alleen generator hieronder uitgebreid met speler-namen.)*</p>
+
+      <h3>Doel van het spel</h3>
+      <p>
+        In <strong>Hatsa</strong> probeer je in elke ronde exact te voorspellen hoeveel slagen je gaat halen.
+        Hoe vaker je precies goed zit, hoe meer punten je scoort. De speler met de hoogste totaalscore wint.
+      </p>
+
+      <h3>Kaarten en kaartwaarden</h3>
+      <p>
+        Het Hatsa-deck bestaat uit meerdere kleuren. Elke kleur bevat kaarten met waarden
+        <strong>1 t/m 9 en E, D, C, B, A</strong>. <strong>A</strong> is de hoogste kaart.
+      </p>
+      <ul>
+        <li>De hoogste kaart in de gevraagde kleur wint.</li>
+        <li>Tenzij er troef in het spel is: <strong>troef wint altijd</strong>.</li>
+        <li>Als er meerdere troeven liggen, wint de hoogste troef.</li>
+      </ul>
+
+      <h3>Voorbereiding</h3>
+      <ol>
+        <li>Kies een dealer (bijvoorbeeld steen–papier–schaar).</li>
+        <li>Schud het deck.</li>
+        <li>Je kiest een <strong>spelformaat</strong> (zie “Spelvormen & rondes”). Het rondegetal = aantal kaarten dat je deelt.</li>
+        <li>Per ronde: deel aan iedere speler het juiste aantal kaarten uit + draai 1 kaart open voor troef.</li>
+      </ol>
+
+      <h3>Rondeverloop</h3>
+      <ol>
+        <li><strong>Delen</strong>: spelers krijgen hun kaarten.</li>
+        <li><strong>Troef bepalen</strong>: draai de bovenste kaart van het deck open. Deze kleur is troef.</li>
+        <li><strong>Actiekaart-moment</strong>: spelers mogen kiezen of ze hun actiekaart inzetten (zie hieronder).</li>
+        <li><strong>Voorspellen</strong>: aftellen 3–2–1 en vingers opsteken voor je voorspelling.</li>
+        <li><strong>Slagen spelen</strong>: kleur bekennen indien mogelijk; hoogste kaart of hoogste troef wint.</li>
+      </ol>
+
+      <h3>Actiekaarten</h3>
+      <p>
+        Actiekaarten zijn eenmalige speciale acties die je alleen mag gebruiken <strong>vóór het voorspellen</strong>.
+      </p>
+      <ul>
+        <li>De speler links van de deler begint.</li>
+        <li>Met de klok mee kiest iedere speler: inzetten of bewaren.</li>
+        <li>Gebruik is optioneel. Wanneer je een actiekaart gebruikt, voer je het effect direct uit en gaat de kaart daarna uit het spel.</li>
+      </ul>
+      <p class="muted"><strong>Instelling (kies vóór start):</strong></p>
+      <ul>
+        <li><strong>Standaard (aanrader):</strong> iedere speler krijgt <strong>1 actiekaart aan het begin van het spel</strong>.</li>
+        <li><strong>Variant:</strong> per ronde 1 actiekaart per speler (chaotischer, sneller “power creep”).</li>
+      </ul>
+      <div class="callout">De werking van elke actiekaart staat op de kaart zelf.</div>
+
+      <h3>Hoe voorspellen?</h3>
+      <p>
+        Analyseer je hand op hoge kaarten, troefkaarten en verdeling. Bedenk hoeveel slagen realistisch zijn en hoeveel risico je wilt nemen.
+      </p>
+
+      <h3>Puntentelling</h3>
+      <ul>
+        <li><strong>Exact goed voorspeld:</strong> 10 punten + 5 per behaalde slag.</li>
+        <li><strong>Niet goed:</strong> geen bonus en <strong>-5 punten per verschil</strong>.</li>
+      </ul>
+      <p class="muted">
+        Voorbeeld: voorspeld 3, gehaald 2 → -5 punten. Voorspeld 5, gehaald 2 → -15 punten.
+      </p>
+
+      <h3>Spelvormen & rondes</h3>
+      <p>
+        In Hatsa bepaal je <strong>zelf</strong> hoe lang het spel duurt. Je kunt een standaard reeks spelen,
+        of gewoon zeggen: “We doen 12 rondes” en dan stop je daar.
+      </p>
+      <ul>
+        <li><strong>Standaard:</strong> <span class="kbd">1 → max → 1</span> (bij max=12: 23 rondes)</li>
+        <li><strong>Alleen oplopend:</strong> <span class="kbd">1 → max</span></li>
+        <li><strong>Alleen aflopend:</strong> <span class="kbd">max → 1</span></li>
+        <li><strong>Kleiner spel:</strong> <span class="kbd">even omhoog</span> en daarna <span class="kbd">oneven omlaag</span> (bij max=12: <span class="kbd">2 4 6 8 10 12 11 9 7 5 3 1</span>)</li>
+        <li><strong>Eigen schema:</strong> vul je eigen ronde-reeks in (bijv. <span class="kbd">1 2 3 4 5 4 3 2 1</span>).</li>
+      </ul>
+
+      <h3>Praktische afspraken (aanrader om “volledig speelbaar” te maken)</h3>
+      <ul>
+        <li><strong>Max kaarten:</strong> kies max zo dat het deck niet op raakt. Speel je met veel spelers? Zet max lager.</li>
+        <li><strong>Troefkaart:</strong> als er niet genoeg kaarten zijn om én te delen én een troef te draaien, dan: deel eerst, en troef = “volgende kaart” (of: laatste gedeelde kaart open = troef). Kies één variant en hou ’m aan.</li>
+        <li><strong>0 voorspellen:</strong> toegestaan.</li>
+        <li><strong>Optionele “Oh Hell” regel:</strong> je mag (optioneel) afspreken dat de totale voorspellingen niet exact gelijk mogen zijn aan het aantal slagen in de ronde (maakt het scherper).</li>
+      </ul>
+
+      <h3>Einde van het spel</h3>
+      <p>Na de laatste ronde telt iedereen zijn punten op. De hoogste score wint.</p>
     </section>
 
-    <!-- Generator -->
+    <!-- GENERATOR -->
     <section id="generatorControls" class="section">
       <h2>Printbare score-sheet <span class="pill">generator</span></h2>
       <div class="neonline"></div>
 
       <p class="muted">
-        Kies het aantal spelers en rondeschema. Vul daarna de speler-namen in (optioneel).
-        Let op: <strong>aantal kaarten = het rondegetal</strong>.
+        Kies spelvorm + rondes. Vul speler-namen in (optioneel). Genereer, en print.
+        In de printtabel noteren we <strong>geen “gehaald”</strong> (behaalde slagen) — alleen <strong>voorspeld</strong> en <strong>punten</strong>.
       </p>
 
       <div class="controls">
@@ -404,34 +536,48 @@
         </div>
 
         <div class="field">
-          <label for="roundMode">Rondeschema</label>
-          <select id="roundMode">
+          <label for="mode">Spelvorm</label>
+          <select id="mode" onchange="toggleModeFields()">
             <option value="updown" selected>Standaard (1 → max → 1)</option>
             <option value="up">Alleen oplopend (1 → max)</option>
             <option value="down">Alleen aflopend (max → 1)</option>
+            <option value="small">Kleiner spel (even omhoog, oneven omlaag)</option>
+            <option value="custom">Eigen schema (zelf invullen)</option>
           </select>
         </div>
 
-        <div class="field small">
-          <label for="maxCards">Max kaarten per speler</label>
+        <div class="field small" id="maxCardsField">
+          <label for="maxCards">Max kaarten</label>
           <select id="maxCards">
             <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
             <option>11</option><option selected>12</option>
           </select>
         </div>
 
+        <div class="field" id="customField" style="display:none;">
+          <label for="customRounds">Eigen schema (getallen, spatie/komma)</label>
+          <input id="customRounds" placeholder="Bijv. 2 4 6 8 10 12 11 9 7 5 3 1" />
+        </div>
+
         <button class="btn" onclick="generateSheet()">Genereer score-sheet</button>
-        <button class="btn secondary" onclick="window.print()">Print score-sheet</button>
+        <button class="btn secondary" onclick="window.print()">Print</button>
       </div>
 
       <div class="checkrow">
-        <input type="checkbox" id="smallGame" />
+        <input type="checkbox" id="limitRounds" onchange="toggleLimitRounds()" />
         <div>
-          <p class="title">Kleiner spel</p>
+          <p class="title">Ik bepaal zelf hoeveel rondes we spelen</p>
           <p class="desc">
-            Schema: <span class="kbd">even omhoog</span> en daarna <span class="kbd">oneven omlaag</span>.
-            Voorbeeld bij max = 12: <span class="kbd">2 4 6 8 10 12 11 9 7 5 3 1</span>
+            Zet aan om de reeks af te kappen op een aantal rondes (bijv. 12 rondes).
+            Handig als je “kort spel” wilt zonder nieuw schema.
           </p>
+        </div>
+      </div>
+
+      <div class="controls" id="limitRoundsControls" style="display:none;">
+        <div class="field small">
+          <label for="roundCount">Aantal rondes</label>
+          <input id="roundCount" type="number" min="1" max="60" value="12" />
         </div>
       </div>
 
@@ -441,11 +587,11 @@
       </div>
 
       <div class="callout">
-        Print is automatisch <span class="kbd">A4 landscape</span>.
+        Print: <span class="kbd">A4 landscape</span>. Bij 7+ spelers splitst de sheet automatisch over meerdere pagina’s.
       </div>
     </section>
 
-    <!-- Printable Sheet -->
+    <!-- PRINTABLE SHEET -->
     <section class="section sheet-wrap" id="sheetWrap">
       <div class="sheet" id="sheet">
         <div class="sheet-header">
@@ -460,15 +606,19 @@
           </div>
         </div>
 
-        <div class="sheet-meta" style="margin-bottom:10px;">
+        <div class="sheet-meta" style="margin-bottom:10px; white-space:normal;">
           <div class="meta-box" id="metaPlayers">Spelers: —</div>
+          <div class="meta-box" id="metaMode">Spelvorm: —</div>
           <div class="meta-box" id="metaRounds">Rondes: —</div>
-          <div class="meta-box" id="metaVariant">Variant: —</div>
           <div class="meta-box">
-            Rekenregel:
-            <span class="kbd">Exact = 10 + 5×gehaald</span> /
-            <span class="kbd">Mis = -5×|verschil|</span>
+            Noteren: <span class="kbd">Voorspeld</span> + <span class="kbd">Punten</span> (geen “gehaald” kolom)
           </div>
+        </div>
+
+        <div class="callout" style="margin: 0 0 12px 0;">
+          Puntentelling reminder:
+          <span class="kbd">Exact = 10 + 5×slagen</span> /
+          <span class="kbd">Mis = -5×|verschil|</span>
         </div>
 
         <div id="tableArea"></div>
@@ -493,27 +643,24 @@
         .replaceAll("'","&#039;");
     }
 
-    function buildRoundsStandard(max, mode){
-      if(mode === "up") return Array.from({length:max}, (_,i)=>i+1);
-      if(mode === "down") return Array.from({length:max}, (_,i)=>max-i);
-
-      // updown: 1..max..1 (zonder dubbele max)
-      const up = Array.from({length:max}, (_,i)=>i+1);
-      const down = Array.from({length:max-1}, (_,i)=>(max-1)-i);
-      return up.concat(down);
+    function clampInt(v, min, max){
+      let n = parseInt(v, 10);
+      if(Number.isNaN(n)) n = min;
+      return Math.max(min, Math.min(max, n));
     }
 
-    function buildRoundsSmallGame(max){
-      const evensMax = (max % 2 === 0) ? max : max - 1;
-      const evens = [];
-      for(let x=2; x<=evensMax; x+=2) evens.push(x);
-
-      const oddsStart = (max % 2 === 0) ? max - 1 : max;
-      const odds = [];
-      for(let x=oddsStart; x>=1; x-=2) odds.push(x);
-
-      if(evens.length === 0) return [1];
-      return evens.concat(odds);
+    function renderNameInputs(){
+      const count = parseInt(document.getElementById("playerCount").value, 10);
+      const grid = document.getElementById("namesGrid");
+      grid.innerHTML = "";
+      for(let i=1;i<=count;i++){
+        const wrap = document.createElement("div");
+        wrap.innerHTML = `
+          <label for="pname-${i}">Speler ${i}</label>
+          <input id="pname-${i}" placeholder="Naam..." />
+        `;
+        grid.appendChild(wrap);
+      }
     }
 
     function getPlayerNames(playerCount){
@@ -526,96 +673,184 @@
       return names;
     }
 
-    function renderNameInputs(){
-      const count = parseInt(document.getElementById("playerCount").value, 10);
-      const grid = document.getElementById("namesGrid");
-      grid.innerHTML = "";
+    function toggleModeFields(){
+      const mode = document.getElementById("mode").value;
+      const maxCardsField = document.getElementById("maxCardsField");
+      const customField = document.getElementById("customField");
 
-      for(let i=1;i<=count;i++){
-        const wrap = document.createElement("div");
-        wrap.className = "field";
-        wrap.innerHTML = `
-          <label for="pname-${i}">Speler ${i}</label>
-          <input id="pname-${i}" placeholder="Naam..." />
-        `;
-        grid.appendChild(wrap);
+      if(mode === "custom"){
+        maxCardsField.style.display = "none";
+        customField.style.display = "block";
+      }else{
+        maxCardsField.style.display = "block";
+        customField.style.display = "none";
       }
+    }
+
+    function toggleLimitRounds(){
+      const on = document.getElementById("limitRounds").checked;
+      document.getElementById("limitRoundsControls").style.display = on ? "flex" : "none";
+    }
+
+    function buildRoundsUpDown(max){
+      const up = Array.from({length:max}, (_,i)=>i+1);
+      const down = Array.from({length:max-1}, (_,i)=>(max-1)-i);
+      return up.concat(down);
+    }
+
+    function buildRoundsUp(max){
+      return Array.from({length:max}, (_,i)=>i+1);
+    }
+
+    function buildRoundsDown(max){
+      return Array.from({length:max}, (_,i)=>max-i);
+    }
+
+    function buildRoundsSmall(max){
+      // even omhoog, daarna oneven omlaag
+      const evensMax = (max % 2 === 0) ? max : max - 1;
+      const evens = [];
+      for(let x=2; x<=evensMax; x+=2) evens.push(x);
+
+      const oddsStart = (max % 2 === 0) ? max - 1 : max;
+      const odds = [];
+      for(let x=oddsStart; x>=1; x-=2) odds.push(x);
+
+      if(evens.length === 0) return [1];
+      return evens.concat(odds);
+    }
+
+    function parseCustomRounds(text){
+      // pak alle positieve integers uit de string
+      const matches = String(text || "").match(/\d+/g);
+      if(!matches) return [];
+      return matches.map(x => clampInt(x, 1, 30));
+    }
+
+    function buildRounds(){
+      const mode = document.getElementById("mode").value;
+
+      let rounds = [];
+      if(mode === "custom"){
+        rounds = parseCustomRounds(document.getElementById("customRounds").value);
+      }else{
+        const max = parseInt(document.getElementById("maxCards").value, 10);
+        if(mode === "updown") rounds = buildRoundsUpDown(max);
+        if(mode === "up") rounds = buildRoundsUp(max);
+        if(mode === "down") rounds = buildRoundsDown(max);
+        if(mode === "small") rounds = buildRoundsSmall(max);
+      }
+
+      // fallback
+      if(!rounds || rounds.length === 0) rounds = [1,2,3,2,1];
+
+      // optional limit
+      if(document.getElementById("limitRounds").checked){
+        const n = clampInt(document.getElementById("roundCount").value, 1, 60);
+        rounds = rounds.slice(0, n);
+      }
+
+      return rounds;
+    }
+
+    function modeLabel(){
+      const mode = document.getElementById("mode").value;
+      const max = document.getElementById("maxCards").value;
+      if(mode === "updown") return `Standaard (1 → ${max} → 1)`;
+      if(mode === "up") return `Oplopend (1 → ${max})`;
+      if(mode === "down") return `Aflopend (${max} → 1)`;
+      if(mode === "small") return `Kleiner spel (even omhoog, oneven omlaag)`;
+      return `Eigen schema`;
+    }
+
+    function chunkArray(arr, size){
+      const out = [];
+      for(let i=0;i<arr.length;i+=size){
+        out.push(arr.slice(i, i+size));
+      }
+      return out;
     }
 
     function generateSheet(){
       const playerCount = parseInt(document.getElementById("playerCount").value, 10);
-      const max = parseInt(document.getElementById("maxCards").value, 10);
-      const mode = document.getElementById("roundMode").value;
-      const small = document.getElementById("smallGame").checked;
-
-      const rounds = small ? buildRoundsSmallGame(max) : buildRoundsStandard(max, mode);
+      const rounds = buildRounds();
       const names = getPlayerNames(playerCount);
 
       // meta
       document.getElementById("metaPlayers").textContent = `Spelers: ${names.join(", ")}`;
+      document.getElementById("metaMode").textContent = `Spelvorm: ${modeLabel()}`;
       document.getElementById("metaRounds").textContent = `Rondes (${rounds.length}): ${rounds.join("–")}`;
-      document.getElementById("metaVariant").textContent = small ? "Variant: Kleiner spel (even omhoog, oneven omlaag)" : "Variant: Standaard";
 
-      // table
+      // Split pages if many players (keeps it pretty on A4)
+      const playersPerPage = 6; // good balance for A4 landscape
+      const pages = chunkArray(names, playersPerPage);
+
       const tableArea = document.getElementById("tableArea");
+      tableArea.innerHTML = "";
 
-      let html = `
-        <table>
-          <thead>
-            <tr>
-              <th rowspan="2" class="center num">Ronde</th>
-              <th rowspan="2" class="center num">Kaarten</th>
-      `;
+      pages.forEach((pagePlayers, pageIdx) => {
+        const pageDiv = document.createElement("div");
+        pageDiv.className = "print-page" + ((pageIdx < pages.length-1) ? " print-break" : "");
+        const title = document.createElement("div");
+        title.className = "page-title";
+        title.textContent = pages.length > 1 ? `Score-sheet (pagina ${pageIdx+1}/${pages.length})` : `Score-sheet`;
+        pageDiv.appendChild(title);
 
-      for(let p=0; p<playerCount; p++){
-        html += `<th colspan="3" class="center">${escapeHtml(names[p])}</th>`;
-      }
-
-      html += `</tr><tr class="subhead">`;
-
-      for(let p=0; p<playerCount; p++){
-        html += `
-          <th class="center">Voorspeld</th>
-          <th class="center">Gehaald</th>
-          <th class="center">Punten</th>
+        // Build table: Ronde | Kaarten | per speler: Voorspeld | Punten
+        let html = `<table><thead>
+          <tr>
+            <th rowspan="2" style="width:60px;">Ronde</th>
+            <th rowspan="2" style="width:70px;">Kaarten</th>
         `;
-      }
 
-      html += `</tr></thead><tbody>`;
+        pagePlayers.forEach(n => {
+          html += `<th colspan="2" class="left">${escapeHtml(n)}</th>`;
+        });
 
-      for(let i=0; i<rounds.length; i++){
+        html += `</tr>
+          <tr class="subhead">`;
+
+        pagePlayers.forEach(_ => {
+          html += `<th style="width:90px;">Voorsp.</th><th style="width:90px;">Punten</th>`;
+        });
+
+        html += `</tr></thead><tbody>`;
+
+        rounds.forEach((cards, i) => {
+          html += `<tr>
+            <td class="num">${i+1}</td>
+            <td class="num">${cards}</td>
+          `;
+          pagePlayers.forEach(_ => {
+            html += `<td class="blank"></td><td class="blank"></td>`;
+          });
+          html += `</tr>`;
+        });
+
+        // totals row
         html += `<tr>
-          <td class="center num">${i+1}</td>
-          <td class="center num">${rounds[i]}</td>
-        `;
-
-        for(let p=0; p<playerCount; p++){
-          html += `<td class="blank"></td><td class="blank"></td><td class="blank"></td>`;
-        }
-
+          <td colspan="2" class="strong">Totaal</td>`;
+        pagePlayers.forEach(_ => {
+          html += `<td class="muted">—</td><td class="blank"></td>`;
+        });
         html += `</tr>`;
-      }
 
-      // totals row
-      html += `<tr>
-        <td colspan="2" class="center"><strong>Totaal</strong></td>`;
-      for(let p=0; p<playerCount; p++){
-        html += `<td colspan="2" class="center muted">—</td><td class="blank"></td>`;
-      }
-      html += `</tr>`;
+        html += `</tbody></table>`;
 
-      html += `</tbody></table>`;
-
-      tableArea.innerHTML = html;
+        pageDiv.insertAdjacentHTML("beforeend", html);
+        tableArea.appendChild(pageDiv);
+      });
 
       // show sheet
       const wrap = document.getElementById("sheetWrap");
       wrap.style.display = "block";
-      wrap.scrollIntoView({behavior: "smooth", block: "start"});
+      wrap.scrollIntoView({behavior:"smooth", block:"start"});
     }
 
     // init
     renderNameInputs();
+    toggleModeFields();
+    toggleLimitRounds();
   </script>
 </body>
 </html>
